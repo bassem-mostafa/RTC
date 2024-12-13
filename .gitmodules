@@ -1,0 +1,15 @@
+[submodule "driver/DS1307"]
+	path = driver/DS1307
+	url = https://github.com/bassem-mostafa/RTC_DS1307.git
+[submodule "driver/STM32L496VGT6P"]
+	path = driver/STM32L496VGT6P
+	url = https://github.com/bassem-mostafa/RTC_STM32L496VGT6P.git
+[submodule "port/Stub"]
+	path = port/Stub
+	url = https://github.com/bassem-mostafa/RTC_Stub.git
+[submodule "port/Windows"]
+	path = port/Windows
+	url = https://github.com/bassem-mostafa/RTC_Windows.git
+[submodule "port/Flow_Meter"]
+	path = port/Flow_Meter
+	url = https://github.com/bassem-mostafa/RTC_Flow_Meter.git
