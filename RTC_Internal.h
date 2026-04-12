@@ -89,7 +89,7 @@ extern "C"
     // #### Public Type(s) #########################################################
     // #############################################################################
 
-    typedef struct RTC_Instance_Context_t RTC_Instance_Context_t;
+    typedef struct RTC_InstanceContext_t RTC_InstanceContext_t;
 
     typedef struct RTC_Instance
     {
@@ -97,7 +97,7 @@ extern "C"
 
         union
         {
-            RTC_Instance_Context_t * Context;
+            RTC_InstanceContext_t * Context;
             RTC_STM32L496VGT6P_Instance_t * STM32L496VGT6P;
         };
     } RTC_Instance_t;
