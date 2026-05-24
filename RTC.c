@@ -61,7 +61,6 @@
 
 typedef struct RTC_Context
 {
-    RTC_Instance_t Instance[ RTC_Count ];
 } RTC_Context_t;
 
 // #############################################################################
@@ -84,59 +83,46 @@ static RTC_Context_t RTC_Context;
 
 static RTC_Status_t RTC_Context_Initialize( void )
 {
-    RTC_Status_t Status = RTC_Status_Error;
+    RTC_Status_t Status = RTC_Status_Success;
+
     do
     {
         RTC_Trace( "%s( void )", __FUNCTION__ );
-        for ( RTC_t RTC_x = RTC_Null; RTC_x < RTC_Count; ++RTC_x )
-        {
-            RTC_Context.Instance[ RTC_x ].RTCx = RTC_x;
-            if ( ( Status = RTC_Instance_Initialize( &RTC_Context.Instance[ RTC_x ] ) ) != RTC_Status_Success )
-            {
-                RTC_Warning( "RTC_%d Initialize Failed: Status %d", RTC_x, Status );
-            }
-        }
-        Status = RTC_Status_Success;
+
+        UTIL_UNUSED( RTC_Context );
     }
     while ( 0 );
+
     return Status;
 }
 
 static RTC_Status_t RTC_Context_Cycle( void )
 {
-    RTC_Status_t Status = RTC_Status_Error;
+    RTC_Status_t Status = RTC_Status_Success;
+
     do
     {
         RTC_Trace( "%s( void )", __FUNCTION__ );
-        for ( RTC_t RTC_x = RTC_Null; RTC_x < RTC_Count; ++RTC_x )
-        {
-            if ( ( Status = RTC_Instance_Cycle( &RTC_Context.Instance[ RTC_x ] ) ) != RTC_Status_Success )
-            {
-                RTC_Warning( "RTC_%d Cycle Failed: Status %d", RTC_x, Status );
-            }
-        }
-        Status = RTC_Status_Success;
+
+        UTIL_UNUSED( RTC_Context );
     }
     while ( 0 );
+
     return Status;
 }
 
 static RTC_Status_t RTC_Context_DeInitialize( void )
 {
-    RTC_Status_t Status = RTC_Status_Error;
+    RTC_Status_t Status = RTC_Status_Success;
+
     do
     {
         RTC_Trace( "%s( void )", __FUNCTION__ );
-        for ( RTC_t RTC_x = RTC_Null; RTC_x < RTC_Count; ++RTC_x )
-        {
-            if ( ( Status = RTC_Instance_DeInitialize( &RTC_Context.Instance[ RTC_x ] ) ) != RTC_Status_Success )
-            {
-                RTC_Warning( "RTC_%d DeInitialize Failed: Status %d", RTC_x, Status );
-            }
-        }
-        Status = RTC_Status_Success;
+
+        UTIL_UNUSED( RTC_Context );
     }
     while ( 0 );
+
     return Status;
 }
 
@@ -146,76 +132,133 @@ static RTC_Status_t RTC_Context_DeInitialize( void )
 
 RTC_Status_t RTC_Initialize( RTC_t RTCx )
 {
-    RTC_Status_t Status = RTC_Status_Error;
+    RTC_Status_t Status = RTC_Status_Success;
+    RTC_Status_t RTC_Status = RTC_Status_Success;
+
     do
     {
-        RTC_Trace( "%s( void )", __FUNCTION__ );
-        Status = RTC_Context_Initialize( );
+        RTC_Trace( "%s( RTCx=%d )", __FUNCTION__, RTCx );
+
+        if ( ( Status = RTC_Context_Initialize( ) ) != RTC_Status_Success )
+        {
+            break;
+        }
+
+        for ( RTC_t RTC_x = RTC_Null; RTC_x < RTC_Count; ++RTC_x )
+        {
+            if ( RTCx != RTC_All && RTCx != RTC_x )
+            {
+                continue;
+            }
+
+            if ( ( RTC_Status = RTC_Port_Initialize( RTC_x ) ) != RTC_Status_Success )
+            {
+                Status = RTC_Status;
+            }
+        }
     }
     while ( 0 );
+
     return Status;
 }
 
 RTC_Status_t RTC_Cycle( RTC_t RTCx )
 {
-    RTC_Status_t Status = RTC_Status_Error;
+    RTC_Status_t Status = RTC_Status_Success;
+    RTC_Status_t RTC_Status = RTC_Status_Success;
+
     do
     {
-        RTC_Trace( "%s( void )", __FUNCTION__ );
-        Status = RTC_Context_Cycle( );
+        RTC_Trace( "%s( RTCx=%d )", __FUNCTION__, RTCx );
+
+        if ( ( Status = RTC_Context_Cycle( ) ) != RTC_Status_Success )
+        {
+            break;
+        }
+
+        for ( RTC_t RTC_x = RTC_Null; RTC_x < RTC_Count; ++RTC_x )
+        {
+            if ( RTCx != RTC_All && RTCx != RTC_x )
+            {
+                continue;
+            }
+
+            if ( ( RTC_Status = RTC_Port_Cycle( RTC_x ) ) != RTC_Status_Success )
+            {
+                Status = RTC_Status;
+            }
+        }
     }
     while ( 0 );
+
     return Status;
 }
 
 RTC_Status_t RTC_DeInitialize( RTC_t RTCx )
 {
-    RTC_Status_t Status = RTC_Status_Error;
+    RTC_Status_t Status = RTC_Status_Success;
+    RTC_Status_t RTC_Status = RTC_Status_Success;
+
     do
     {
-        RTC_Trace( "%s( void )", __FUNCTION__ );
-        Status = RTC_Context_DeInitialize( );
+        RTC_Trace( "%s( RTCx=%d )", __FUNCTION__, RTCx );
+
+        for ( RTC_t RTC_x = RTC_Null; RTC_x < RTC_Count; ++RTC_x )
+        {
+            if ( RTCx != RTC_All && RTCx != RTC_x )
+            {
+                continue;
+            }
+
+            if ( ( RTC_Status = RTC_Port_DeInitialize( RTC_x ) ) != RTC_Status_Success )
+            {
+                Status = RTC_Status;
+            }
+        }
+
+        if ( ( Status = RTC_Context_DeInitialize( ) ) != RTC_Status_Success )
+        {
+            break;
+        }
     }
     while ( 0 );
+
     return Status;
 }
 
 RTC_Status_t RTC_Get_Timestamp( RTC_t RTCx, RTC_Timestamp_t * Timestamp )
 {
-    RTC_Status_t Status = RTC_Status_Error;
+    RTC_Status_t Status = RTC_Status_Success;
+
     do
     {
-        RTC_Trace( "%s( RTC=RTC_%d, Timestamp=%p )", __FUNCTION__, RTCx, Timestamp );
+        RTC_Trace( "%s( RTCx=%d, Timestamp=%p )", __FUNCTION__, RTCx, Timestamp );
+
         if ( Timestamp == NULL )
         {
             Status = RTC_Status_ArgumentInvalid;
             break;
         }
-        if ( ( Status = RTC_IsValid( RTCx ) ) != RTC_Status_Success )
-        {
-            break;
-        }
-        RTC_Instance_t * Instance = &RTC_Context.Instance[ RTCx ];
-        Status = RTC_Instance_GetTimestamp( Instance, Timestamp );
+
+        Status = RTC_Port_GetTimestamp( RTCx, Timestamp );
     }
     while ( 0 );
+
     return Status;
 }
 
 RTC_Status_t RTC_Set_Timestamp( RTC_t RTCx, RTC_Timestamp_t Timestamp )
 {
-    RTC_Status_t Status = RTC_Status_Error;
+    RTC_Status_t Status = RTC_Status_Success;
+
     do
     {
-        RTC_Trace( "%s( RTC=RTC_%d, Timestamp=%p )", __FUNCTION__, RTCx, Timestamp );
-        if ( ( Status = RTC_IsValid( RTCx ) ) != RTC_Status_Success )
-        {
-            break;
-        }
-        RTC_Instance_t * Instance = &RTC_Context.Instance[ RTCx ];
-        Status = RTC_Instance_SetTimestamp( Instance, Timestamp );
+        RTC_Trace( "%s( RTCx=%d, Timestamp={Weekday=%d, Year=%d, Month=%d, Day=%d, Hour=%d, Minute=%d, Second=%d, Millisecond=%d, Microsecond=%d} )", __FUNCTION__, RTCx, Timestamp.Weekday, Timestamp.Year, Timestamp.Month, Timestamp.Day, Timestamp.Hour, Timestamp.Minute, Timestamp.Second, Timestamp.Millisecond, Timestamp.Microsecond );
+
+        Status = RTC_Port_SetTimestamp( RTCx, Timestamp );
     }
     while ( 0 );
+
     return Status;
 }
 
@@ -223,7 +266,7 @@ RTC_Status_t RTC_Set_Timestamp( RTC_t RTCx, RTC_Timestamp_t Timestamp )
 // #### Public Variable(s) #####################################################
 // #############################################################################
 
-const char RTC_VERSION[] = "0.0.0.v20260412-1852";
+const char RTC_VERSION[] = "0.0.0.v20260524-1454";
 
 // #############################################################################
 // #### File Guard #############################################################

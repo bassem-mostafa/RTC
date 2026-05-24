@@ -89,16 +89,20 @@ extern "C"
     // #### Public Type(s) #########################################################
     // #############################################################################
 
-    typedef struct RTC_InstanceContext_t RTC_InstanceContext_t;
+    typedef enum RTC_Type
+    {
+        RTC_Type_Unknown = 0,
+        RTC_Type_Null,
+        RTC_Type_STM32L496VGT6P,
+    } RTC_Type_t;
 
     typedef struct RTC_Instance
     {
-        RTC_t RTCx;
+        RTC_Type_t Type;
 
         union
         {
-            RTC_InstanceContext_t * Context;
-            RTC_STM32L496VGT6P_Instance_t * STM32L496VGT6P;
+            RTC_STM32L496VGT6P_t STM32L496VGT6Px;
         };
     } RTC_Instance_t;
 
@@ -107,14 +111,12 @@ extern "C"
     // #############################################################################
 
     // The following APIs MUST be provided by the port
-    RTC_Status_t RTC_IsValid( RTC_t RTC );
+    RTC_Status_t RTC_Port_Initialize( RTC_t RTCx );
+    RTC_Status_t RTC_Port_Cycle( RTC_t RTCx );
+    RTC_Status_t RTC_Port_DeInitialize( RTC_t RTCx );
 
-    RTC_Status_t RTC_Instance_Initialize( RTC_Instance_t * RTC_Instance );
-    RTC_Status_t RTC_Instance_Cycle( RTC_Instance_t * RTC_Instance );
-    RTC_Status_t RTC_Instance_DeInitialize( RTC_Instance_t * RTC_Instance );
-
-    RTC_Status_t RTC_Instance_GetTimestamp( RTC_Instance_t * RTC_Instance, RTC_Timestamp_t * RTC_Timestamp );
-    RTC_Status_t RTC_Instance_SetTimestamp( RTC_Instance_t * RTC_Instance, RTC_Timestamp_t RTC_Timestamp );
+    RTC_Status_t RTC_Port_GetTimestamp( RTC_t RTCx, RTC_Timestamp_t * Timestamp );
+    RTC_Status_t RTC_Port_SetTimestamp( RTC_t RTCx, RTC_Timestamp_t Timestamp );
 
     // #############################################################################
     // #### Public Variable(s) #####################################################
