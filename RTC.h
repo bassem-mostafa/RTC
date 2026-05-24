@@ -2537,7 +2537,7 @@ extern "C"
     /**
      *  @brief Get a time-stamp from specified RTC
      *
-     *  @param[in]  RTCx          Peripheral
+     *  @param[in]  RTCx      Peripheral
      *  @param[out] Timestamp Time-stamp
      *
      *  @return RTC_Status_t
@@ -2547,7 +2547,7 @@ extern "C"
     /**
      *  @brief Set a time-stamp to specified RTC
      *
-     *  @param[in] RTCx          Peripheral
+     *  @param[in] RTCx      Peripheral
      *  @param[in] Timestamp Time-stamp
      *
      *  @return RTC_Status_t
