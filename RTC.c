@@ -59,72 +59,17 @@
 // #### Private Type(s) ########################################################
 // #############################################################################
 
-typedef struct RTC_Context
-{
-} RTC_Context_t;
-
 // #############################################################################
 // #### Private Method(s) Prototype ############################################
 // #############################################################################
-
-static RTC_Status_t RTC_Context_Initialize( void );
-static RTC_Status_t RTC_Context_Cycle( void );
-static RTC_Status_t RTC_Context_DeInitialize( void );
 
 // #############################################################################
 // #### Private Variable(s) ####################################################
 // #############################################################################
 
-static RTC_Context_t RTC_Context;
-
 // #############################################################################
 // #### Private Method(s) ######################################################
 // #############################################################################
-
-static RTC_Status_t RTC_Context_Initialize( void )
-{
-    RTC_Status_t Status = RTC_Status_Success;
-
-    do
-    {
-        RTC_Trace( "%s( void )", __FUNCTION__ );
-
-        UTIL_UNUSED( RTC_Context );
-    }
-    while ( 0 );
-
-    return Status;
-}
-
-static RTC_Status_t RTC_Context_Cycle( void )
-{
-    RTC_Status_t Status = RTC_Status_Success;
-
-    do
-    {
-        RTC_Trace( "%s( void )", __FUNCTION__ );
-
-        UTIL_UNUSED( RTC_Context );
-    }
-    while ( 0 );
-
-    return Status;
-}
-
-static RTC_Status_t RTC_Context_DeInitialize( void )
-{
-    RTC_Status_t Status = RTC_Status_Success;
-
-    do
-    {
-        RTC_Trace( "%s( void )", __FUNCTION__ );
-
-        UTIL_UNUSED( RTC_Context );
-    }
-    while ( 0 );
-
-    return Status;
-}
 
 // #############################################################################
 // #### Public Method(s) #######################################################
@@ -139,18 +84,10 @@ RTC_Status_t RTC_Initialize( RTC_t RTCx )
     {
         RTC_Trace( "%s( RTCx=%d )", __FUNCTION__, RTCx );
 
-        if ( ( Status = RTC_Context_Initialize( ) ) != RTC_Status_Success )
+        RTC_t RTC_start = ( RTCx == RTC_All ? RTC_Null : RTCx );
+        RTC_t RTC_end = ( RTCx == RTC_All ? RTC_Count : RTCx + 1 );
+        for ( RTC_t RTC_x = RTC_start; RTC_x < RTC_end; ++RTC_x )
         {
-            break;
-        }
-
-        for ( RTC_t RTC_x = RTC_Null; RTC_x < RTC_Count; ++RTC_x )
-        {
-            if ( RTCx != RTC_All && RTCx != RTC_x )
-            {
-                continue;
-            }
-
             if ( ( RTC_Status = RTC_Port_Initialize( RTC_x ) ) != RTC_Status_Success )
             {
                 Status = RTC_Status;
@@ -171,18 +108,10 @@ RTC_Status_t RTC_Cycle( RTC_t RTCx )
     {
         RTC_Trace( "%s( RTCx=%d )", __FUNCTION__, RTCx );
 
-        if ( ( Status = RTC_Context_Cycle( ) ) != RTC_Status_Success )
+        RTC_t RTC_start = ( RTCx == RTC_All ? RTC_Null : RTCx );
+        RTC_t RTC_end = ( RTCx == RTC_All ? RTC_Count : RTCx + 1 );
+        for ( RTC_t RTC_x = RTC_start; RTC_x < RTC_end; ++RTC_x )
         {
-            break;
-        }
-
-        for ( RTC_t RTC_x = RTC_Null; RTC_x < RTC_Count; ++RTC_x )
-        {
-            if ( RTCx != RTC_All && RTCx != RTC_x )
-            {
-                continue;
-            }
-
             if ( ( RTC_Status = RTC_Port_Cycle( RTC_x ) ) != RTC_Status_Success )
             {
                 Status = RTC_Status;
@@ -203,22 +132,14 @@ RTC_Status_t RTC_DeInitialize( RTC_t RTCx )
     {
         RTC_Trace( "%s( RTCx=%d )", __FUNCTION__, RTCx );
 
-        for ( RTC_t RTC_x = RTC_Null; RTC_x < RTC_Count; ++RTC_x )
+        RTC_t RTC_start = ( RTCx == RTC_All ? RTC_Null : RTCx );
+        RTC_t RTC_end = ( RTCx == RTC_All ? RTC_Count : RTCx + 1 );
+        for ( RTC_t RTC_x = RTC_start; RTC_x < RTC_end; ++RTC_x )
         {
-            if ( RTCx != RTC_All && RTCx != RTC_x )
-            {
-                continue;
-            }
-
             if ( ( RTC_Status = RTC_Port_DeInitialize( RTC_x ) ) != RTC_Status_Success )
             {
                 Status = RTC_Status;
             }
-        }
-
-        if ( ( Status = RTC_Context_DeInitialize( ) ) != RTC_Status_Success )
-        {
-            break;
         }
     }
     while ( 0 );
@@ -262,11 +183,26 @@ RTC_Status_t RTC_Set_Timestamp( RTC_t RTCx, RTC_Timestamp_t Timestamp )
     return Status;
 }
 
+RTC_Status_t RTC_Set_TimestampAlarm( RTC_t RTCx, RTC_Timestamp_t Timestamp )
+{
+    RTC_Status_t Status = RTC_Status_Success;
+
+    do
+    {
+        RTC_Trace( "%s( RTCx=%d, Timestamp={Weekday=%d, Year=%d, Month=%d, Day=%d, Hour=%d, Minute=%d, Second=%d, Millisecond=%d, Microsecond=%d} )", __FUNCTION__, RTCx, Timestamp.Weekday, Timestamp.Year, Timestamp.Month, Timestamp.Day, Timestamp.Hour, Timestamp.Minute, Timestamp.Second, Timestamp.Millisecond, Timestamp.Microsecond );
+
+        Status = RTC_Port_SetTimestampAlarm( RTCx, Timestamp );
+    }
+    while ( 0 );
+
+    return Status;
+}
+
 // #############################################################################
 // #### Public Variable(s) #####################################################
 // #############################################################################
 
-const char RTC_VERSION[] = "0.0.0.v20260524-1513";
+const char RTC_VERSION[] = "0.0.0.v20260818-0345";
 
 // #############################################################################
 // #### File Guard #############################################################

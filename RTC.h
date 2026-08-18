@@ -2554,6 +2554,16 @@ extern "C"
      */
     RTC_Status_t RTC_Set_Timestamp( RTC_t RTCx, RTC_Timestamp_t Timestamp );
 
+    /**
+     *  @brief Set a alarm time-stamp to specified RTC
+     *
+     *  @param[in] RTCx      Peripheral
+     *  @param[in] Timestamp Alarm time-stamp
+     *
+     *  @return RTC_Status_t
+     */
+    RTC_Status_t RTC_Set_TimestampAlarm( RTC_t RTCx, RTC_Timestamp_t Timestamp );
+
     // #############################################################################
     // #### Public Variable(s) #####################################################
     // #############################################################################

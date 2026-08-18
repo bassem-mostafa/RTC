@@ -117,6 +117,7 @@ extern "C"
 
     RTC_Status_t RTC_Port_GetTimestamp( RTC_t RTCx, RTC_Timestamp_t * Timestamp );
     RTC_Status_t RTC_Port_SetTimestamp( RTC_t RTCx, RTC_Timestamp_t Timestamp );
+    RTC_Status_t RTC_Port_SetTimestampAlarm( RTC_t RTCx, RTC_Timestamp_t Timestamp );
 
     // #############################################################################
     // #### Public Variable(s) #####################################################
