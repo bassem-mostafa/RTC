@@ -198,11 +198,26 @@ RTC_Status_t RTC_Set_TimestampAlarm( RTC_t RTCx, RTC_Timestamp_t Timestamp )
     return Status;
 }
 
+RTC_Status_t RTC_Set_WakeUpPeriod( RTC_t RTCx, RTC_Millisecond_t Period )
+{
+    RTC_Status_t Status = RTC_Status_Success;
+
+    do
+    {
+        RTC_Trace( "%s( RTCx=%d, Period=%d )", __FUNCTION__, RTCx, Period );
+
+        Status = RTC_Port_SetWakeUpPeriod( RTCx, Period );
+    }
+    while ( 0 );
+
+    return Status;
+}
+
 // #############################################################################
 // #### Public Variable(s) #####################################################
 // #############################################################################
 
-const char RTC_VERSION[] = "0.0.0.v20260905-1510";
+const char RTC_VERSION[] = "0.0.0.v20260907-0014";
 
 // #############################################################################
 // #### File Guard #############################################################

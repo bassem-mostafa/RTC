@@ -2564,6 +2564,16 @@ extern "C"
      */
     RTC_Status_t RTC_Set_TimestampAlarm( RTC_t RTCx, RTC_Timestamp_t Timestamp );
 
+    /**
+     *  @brief Set a wake-up period to specified RTC
+     *
+     *  @param[in] RTCx   Peripheral
+     *  @param[in] Period Wake-up period
+     *
+     *  @return RTC_Status_t
+     */
+    RTC_Status_t RTC_Set_WakeUpPeriod( RTC_t RTCx, RTC_Millisecond_t Period );
+
     // #############################################################################
     // #### Public Variable(s) #####################################################
     // #############################################################################
