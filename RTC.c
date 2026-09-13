@@ -78,20 +78,14 @@
 RTC_Status_t RTC_Initialize( RTC_t RTCx )
 {
     RTC_Status_t Status = RTC_Status_Success;
-    RTC_Status_t RTC_Status = RTC_Status_Success;
 
     do
     {
         RTC_Trace( "%s( RTCx=%d )", __FUNCTION__, RTCx );
 
-        RTC_t RTC_start = ( RTCx == RTC_All ? RTC_Null : RTCx );
-        RTC_t RTC_end = ( RTCx == RTC_All ? RTC_Count : RTCx + 1 );
-        for ( RTC_t RTC_x = RTC_start; RTC_x < RTC_end; ++RTC_x )
+        if ( ( Status = RTC_Port_Initialize( RTCx ) ) != RTC_Status_Success )
         {
-            if ( ( RTC_Status = RTC_Port_Initialize( RTC_x ) ) != RTC_Status_Success )
-            {
-                Status = RTC_Status;
-            }
+            break;
         }
     }
     while ( 0 );
@@ -102,20 +96,14 @@ RTC_Status_t RTC_Initialize( RTC_t RTCx )
 RTC_Status_t RTC_Cycle( RTC_t RTCx )
 {
     RTC_Status_t Status = RTC_Status_Success;
-    RTC_Status_t RTC_Status = RTC_Status_Success;
 
     do
     {
         RTC_Trace( "%s( RTCx=%d )", __FUNCTION__, RTCx );
 
-        RTC_t RTC_start = ( RTCx == RTC_All ? RTC_Null : RTCx );
-        RTC_t RTC_end = ( RTCx == RTC_All ? RTC_Count : RTCx + 1 );
-        for ( RTC_t RTC_x = RTC_start; RTC_x < RTC_end; ++RTC_x )
+        if ( ( Status = RTC_Port_Cycle( RTCx ) ) != RTC_Status_Success )
         {
-            if ( ( RTC_Status = RTC_Port_Cycle( RTC_x ) ) != RTC_Status_Success )
-            {
-                Status = RTC_Status;
-            }
+            break;
         }
     }
     while ( 0 );
@@ -126,20 +114,14 @@ RTC_Status_t RTC_Cycle( RTC_t RTCx )
 RTC_Status_t RTC_DeInitialize( RTC_t RTCx )
 {
     RTC_Status_t Status = RTC_Status_Success;
-    RTC_Status_t RTC_Status = RTC_Status_Success;
 
     do
     {
         RTC_Trace( "%s( RTCx=%d )", __FUNCTION__, RTCx );
 
-        RTC_t RTC_start = ( RTCx == RTC_All ? RTC_Null : RTCx );
-        RTC_t RTC_end = ( RTCx == RTC_All ? RTC_Count : RTCx + 1 );
-        for ( RTC_t RTC_x = RTC_start; RTC_x < RTC_end; ++RTC_x )
+        if ( ( Status = RTC_Port_DeInitialize( RTCx ) ) != RTC_Status_Success )
         {
-            if ( ( RTC_Status = RTC_Port_DeInitialize( RTC_x ) ) != RTC_Status_Success )
-            {
-                Status = RTC_Status;
-            }
+            break;
         }
     }
     while ( 0 );
@@ -217,7 +199,7 @@ RTC_Status_t RTC_Set_WakeUpPeriod( RTC_t RTCx, RTC_Millisecond_t Period )
 // #### Public Variable(s) #####################################################
 // #############################################################################
 
-const char RTC_VERSION[] = "0.0.0.v20260907-0014";
+const char RTC_VERSION[] = "0.0.0.v20260913-1832";
 
 // #############################################################################
 // #### File Guard #############################################################
