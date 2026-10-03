@@ -120,6 +120,9 @@ extern "C"
     RTC_Status_t RTC_Port_SetTimestampAlarm( RTC_t RTCx, RTC_Timestamp_t Timestamp );
     RTC_Status_t RTC_Port_SetWakeUpPeriod( RTC_t RTCx, RTC_Millisecond_t Period );
 
+    RTC_Status_t RTC_Port_MemoryWrite( RTC_t RTCx, RTC_Address_t Address, RTC_Data_t * Data, RTC_DataLength_t DataLength );
+    RTC_Status_t RTC_Port_MemoryRead( RTC_t RTCx, RTC_Address_t Address, RTC_Data_t * Data, RTC_DataLength_t DataLength );
+
     // #############################################################################
     // #### Public Variable(s) #####################################################
     // #############################################################################

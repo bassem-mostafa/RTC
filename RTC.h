@@ -2501,6 +2501,10 @@ extern "C"
         RTC_Weekday_t Weekday; ///< Weekday
     } RTC_Timestamp_t;
 
+    typedef uint32_t RTC_Address_t;
+    typedef uint8_t RTC_Data_t;
+    typedef uint32_t RTC_DataLength_t;
+
     // #############################################################################
     // #### Public Method(s) #######################################################
     // #############################################################################
@@ -2573,6 +2577,30 @@ extern "C"
      *  @return RTC_Status_t
      */
     RTC_Status_t RTC_Set_WakeUpPeriod( RTC_t RTCx, RTC_Millisecond_t Period );
+
+    /**
+     *  @brief Write data into specified RTC memory
+     *
+     *  @param[in] RTCx       Peripheral
+     *  @param[in] Address    Memory address
+     *  @param[in] Data       Data buffer
+     *  @param[in] DataLength Data buffer length
+     *
+     *  @return RTC_Status_t
+     */
+    RTC_Status_t RTC_MemoryWrite( RTC_t RTCx, RTC_Address_t Address, RTC_Data_t * Data, RTC_DataLength_t DataLength );
+
+    /**
+     *  @brief Read data from specified RTC memory
+     *
+     *  @param[in] RTCx       Peripheral
+     *  @param[in] Address    Memory address
+     *  @param[in] Data       Data buffer
+     *  @param[in] DataLength Data buffer length
+     *
+     *  @return RTC_Status_t
+     */
+    RTC_Status_t RTC_MemoryRead( RTC_t RTCx, RTC_Address_t Address, RTC_Data_t * Data, RTC_DataLength_t DataLength );
 
     // #############################################################################
     // #### Public Variable(s) #####################################################

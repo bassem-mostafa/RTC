@@ -195,11 +195,41 @@ RTC_Status_t RTC_Set_WakeUpPeriod( RTC_t RTCx, RTC_Millisecond_t Period )
     return Status;
 }
 
+RTC_Status_t RTC_MemoryWrite( RTC_t RTCx, RTC_Address_t Address, RTC_Data_t * Data, RTC_DataLength_t DataLength )
+{
+    RTC_Status_t Status = RTC_Status_Success;
+
+    do
+    {
+        RTC_Trace( "%s( RTCx=%d, Address=%d, Data=%p, Length=%d )", __FUNCTION__, RTCx, Address, Data, DataLength );
+
+        Status = RTC_Port_MemoryWrite( RTCx, Address, Data, DataLength );
+    }
+    while ( 0 );
+
+    return Status;
+}
+
+RTC_Status_t RTC_MemoryRead( RTC_t RTCx, RTC_Address_t Address, RTC_Data_t * Data, RTC_DataLength_t DataLength )
+{
+    RTC_Status_t Status = RTC_Status_Success;
+
+    do
+    {
+        RTC_Trace( "%s( RTCx=%d, Address=%d, Data=%p, Length=%d )", __FUNCTION__, RTCx, Address, Data, DataLength );
+
+        Status = RTC_Port_MemoryRead( RTCx, Address, Data, DataLength );
+    }
+    while ( 0 );
+
+    return Status;
+}
+
 // #############################################################################
 // #### Public Variable(s) #####################################################
 // #############################################################################
 
-const char RTC_VERSION[] = "0.0.0.v20260913-1832";
+const char RTC_VERSION[] = "0.0.0.v20261004-0226";
 
 // #############################################################################
 // #### File Guard #############################################################
